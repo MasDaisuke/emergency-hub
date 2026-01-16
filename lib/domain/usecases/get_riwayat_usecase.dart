@@ -1,5 +1,5 @@
-// import '../entities/laporan_entity.dart';
-// import '../repositories/emergency_repository.dart';
+import '../entities/laporan_entity.dart';
+import '../repositories/emergency_repository.dart';
 
 class GetRiwayatUseCase {
   final EmergencyRepository repository;

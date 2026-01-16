@@ -1,4 +1,4 @@
-// import '../repositories/emergency_repository.dart';
+import '../repositories/emergency_repository.dart';
 
 class HapusLaporanUseCase {
   final EmergencyRepository repository;
