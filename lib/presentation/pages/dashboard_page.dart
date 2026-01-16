@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/kategori_entity.dart';
 import '../widgets/instansi_card_widget.dart';
+import 'form_lapor_page.dart';
 
 class DashboardPage extends StatelessWidget {
   final List<KategoriEntity> instansiList = [
@@ -35,7 +36,18 @@ class DashboardPage extends StatelessWidget {
                 ),
                 itemCount: instansiList.length,
                 itemBuilder: (context, index) {
-                  //
+                  return InstansiCardWidget(
+                    instansi: instansiList[index],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              FormLaporPage(kategori: instansiList[index].nama),
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             ),
