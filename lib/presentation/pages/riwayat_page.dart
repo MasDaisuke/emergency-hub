@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/emergency_provider.dart';
+import '../widgets/riwayat_item_card.dart';
+import 'detail_laporan_page.dart';
 
 class RiwayatPage extends StatefulWidget {
   @override
@@ -32,7 +34,24 @@ class _RiwayatPageState extends State<RiwayatPage> {
           return ListView.builder(
             itemCount: provider.laporanList.length,
             itemBuilder: (context, index) {
-              //
+              final item = provider.laporanList[index];
+              return RiwayatItemCard(
+                laporan: item,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => DetailLaporanPage(laporan: item),
+                    ),
+                  );
+                },
+                onDelete: () {
+                  Provider.of<EmergencyProvider>(
+                    context,
+                    listen: false,
+                  ).hapusLaporan(item.id);
+                },
+              );
             },
           );
         },
