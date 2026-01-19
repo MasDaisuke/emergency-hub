@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../domain/entities/kategori_entity.dart';
 import '../widgets/instansi_card_widget.dart';
-import '../providers/auth_provider.dart'; // Import AuthProvider
+import '../providers/auth_provider.dart';
 import 'form_lapor_page.dart';
 import 'riwayat_page.dart';
-import 'login_page.dart'; // Import Login Page
+import 'login_page.dart';
 
 class DashboardPage extends StatelessWidget {
-  // Data statis kategori instansi
   final List<KategoriEntity> instansiList = [
     KategoriEntity(
       nama: 'Polisi',
@@ -50,25 +49,51 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Emergency Hub"),
-        backgroundColor: Colors.redAccent,
-        foregroundColor: Colors.white,
-      ),
+    final Color bgSilver = Color(0xFFF3F4F6);
+    final Color textDark = Colors.blueGrey[800]!;
 
-      // === MENU SAMPING (DRAWER) ===
+    return Scaffold(
+      backgroundColor: bgSilver,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textDark),
+        title: Text(
+          "Emergency Hub",
+          style: TextStyle(
+            color: textDark,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.blue[50],
+              child: Icon(Icons.person, color: Colors.blue),
+            ),
+          ),
+        ],
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(color: Colors.redAccent),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF4FC3F7), Color(0xFF2196F3)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(Icons.emergency, size: 50, color: Colors.white),
+                  Icon(Icons.emergency_outlined, size: 50, color: Colors.white),
                   SizedBox(height: 10),
                   Text(
                     "Menu Aplikasi",
@@ -82,14 +107,12 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.dashboard, color: Colors.redAccent),
+              leading: Icon(Icons.dashboard_outlined, color: Colors.blue),
               title: Text("Dashboard"),
-              onTap: () {
-                Navigator.pop(context); // Tutup drawer
-              },
+              onTap: () => Navigator.pop(context),
             ),
             ListTile(
-              leading: Icon(Icons.history, color: Colors.redAccent),
+              leading: Icon(Icons.history, color: Colors.blue),
               title: Text("Riwayat Laporan"),
               onTap: () {
                 Navigator.pop(context);
@@ -99,20 +122,15 @@ class DashboardPage extends StatelessWidget {
                 );
               },
             ),
-
-            // === TOMBOL LOGOUT (POSISI YANG BENAR DISINI) ===
             Divider(),
             ListTile(
-              leading: Icon(Icons.logout, color: Colors.red),
-              title: Text("Logout", style: TextStyle(color: Colors.red)),
+              leading: Icon(Icons.logout, color: Colors.redAccent),
+              title: Text("Logout", style: TextStyle(color: Colors.redAccent)),
               onTap: () async {
-                // 1. Panggil fungsi logout dari Provider
                 await Provider.of<AuthProvider>(
                   context,
                   listen: false,
                 ).logout();
-
-                // 2. Kembali ke Halaman Login & Hapus semua history navigasi sebelumnya
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (_) => LoginPage()),
@@ -120,29 +138,37 @@ class DashboardPage extends StatelessWidget {
                 );
               },
             ),
-            // ================================================
           ],
         ),
       ),
-
-      // === ISI UTAMA HALAMAN ===
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Sapaan Header
             Text(
-              "Pilih Kategori Darurat:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              "Butuh bantuan apa?",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: textDark,
+              ),
             ),
-            SizedBox(height: 10),
+            Text(
+              "Pilih layanan darurat di bawah ini",
+              style: TextStyle(fontSize: 14, color: Colors.blueGrey[400]),
+            ),
+
+            SizedBox(height: 20),
             Expanded(
               child: GridView.builder(
+                padding: EdgeInsets.only(bottom: 20),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 1.2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 1.1,
                 ),
                 itemCount: instansiList.length,
                 itemBuilder: (context, index) {
