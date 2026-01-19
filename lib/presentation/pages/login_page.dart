@@ -12,8 +12,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  // Logic Login tetap sama, tidak ada yang berubah di fungsi ini
   void _handleLogin() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
@@ -43,20 +41,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Definisi Warna Tema
-    final Color bgSilver = Color(0xFFF3F4F6); // Silver Muda
-    final Color accentBlueStart = Color(0xFF4FC3F7); // Biru Langit
-    final Color accentBlueEnd = Color(0xFF2196F3); // Biru Laut
+    final Color bgSilver = Color(0xFFF3F4F6);
+    final Color accentBlueStart = Color(0xFF4FC3F7);
+    final Color accentBlueEnd = Color(0xFF2196F3);
 
     return Scaffold(
-      backgroundColor: bgSilver, // Set Background Silver
+      backgroundColor: bgSilver,
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 1. HEADER (Logo & Judul)
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -91,10 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                 "Masuk untuk melanjutkan",
                 style: TextStyle(fontSize: 14, color: Colors.blueGrey[400]),
               ),
-
               SizedBox(height: 40),
-
-              // 2. FORM CARD (Kartu Putih)
               Container(
                 padding: EdgeInsets.all(25),
                 decoration: BoxDecoration(
@@ -110,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Column(
                   children: [
-                    // Input Email
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -133,8 +125,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-
-                    // Input Password
                     TextField(
                       controller: _passwordController,
                       decoration: InputDecoration(
@@ -157,10 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       obscureText: true,
                     ),
-
                     SizedBox(height: 30),
-
-                    // 3. GRADIENT LOGIN BUTTON
                     Consumer<AuthProvider>(
                       builder: (context, auth, child) {
                         return Container(
@@ -187,8 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton(
                             onPressed: auth.isLoading ? null : _handleLogin,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors
-                                  .transparent, // Transparan agar gradient terlihat
+                              backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -220,8 +206,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               SizedBox(height: 30),
-
-              // 4. FOOTER (Register Link)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -243,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),  
+                  ),
                 ],
               ),
             ],
