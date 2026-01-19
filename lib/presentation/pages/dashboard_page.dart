@@ -67,15 +67,6 @@ class DashboardPage extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.blue[50],
-              child: Icon(Icons.person, color: Colors.blue),
-            ),
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(
