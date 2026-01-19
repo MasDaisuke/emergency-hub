@@ -10,12 +10,42 @@ import 'login_page.dart'; // Import Login Page
 class DashboardPage extends StatelessWidget {
   // Data statis kategori instansi
   final List<KategoriEntity> instansiList = [
-    KategoriEntity(nama: 'Polisi', nomor: '110', iconName: 'police'),
-    KategoriEntity(nama: 'Ambulans', nomor: '118', iconName: 'ambulance'),
-    KategoriEntity(nama: 'Pemadam', nomor: '113', iconName: 'fire'),
-    KategoriEntity(nama: 'BNPB', nomor: '117', iconName: 'bnpb'),
-    KategoriEntity(nama: 'PLN', nomor: '123', iconName: 'pln'),
-    KategoriEntity(nama: 'Derek', nomor: '14080', iconName: 'tow'),
+    KategoriEntity(
+      nama: 'Polisi',
+      nomor: '110',
+      icon: Icons.local_police,
+      color: Colors.blue[800]!,
+    ),
+    KategoriEntity(
+      nama: 'Ambulans',
+      nomor: '118',
+      icon: Icons.medical_services,
+      color: Colors.green[600]!,
+    ),
+    KategoriEntity(
+      nama: 'Pemadam',
+      nomor: '113',
+      icon: Icons.local_fire_department,
+      color: Colors.orange[800]!,
+    ),
+    KategoriEntity(
+      nama: 'BNPB',
+      nomor: '117',
+      icon: Icons.flood,
+      color: Colors.brown[600]!,
+    ),
+    KategoriEntity(
+      nama: 'PLN',
+      nomor: '123',
+      icon: Icons.electric_bolt,
+      color: Colors.yellow[800]!,
+    ),
+    KategoriEntity(
+      nama: 'Derek',
+      nomor: '14080',
+      icon: Icons.car_crash,
+      color: Colors.purple[600]!,
+    ),
   ];
 
   @override
@@ -23,19 +53,17 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Emergency Hub"),
-        backgroundColor: Colors.redAccent, 
+        backgroundColor: Colors.redAccent,
         foregroundColor: Colors.white,
       ),
-      
+
       // === MENU SAMPING (DRAWER) ===
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.redAccent,
-              ),
+              decoration: BoxDecoration(color: Colors.redAccent),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -44,7 +72,11 @@ class DashboardPage extends StatelessWidget {
                   SizedBox(height: 10),
                   Text(
                     "Menu Aplikasi",
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -60,28 +92,31 @@ class DashboardPage extends StatelessWidget {
               leading: Icon(Icons.history, color: Colors.redAccent),
               title: Text("Riwayat Laporan"),
               onTap: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
                 Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (_) => RiwayatPage())
+                  context,
+                  MaterialPageRoute(builder: (_) => RiwayatPage()),
                 );
               },
             ),
-            
+
             // === TOMBOL LOGOUT (POSISI YANG BENAR DISINI) ===
-            Divider(), 
+            Divider(),
             ListTile(
               leading: Icon(Icons.logout, color: Colors.red),
               title: Text("Logout", style: TextStyle(color: Colors.red)),
               onTap: () async {
                 // 1. Panggil fungsi logout dari Provider
-                await Provider.of<AuthProvider>(context, listen: false).logout();
-                
+                await Provider.of<AuthProvider>(
+                  context,
+                  listen: false,
+                ).logout();
+
                 // 2. Kembali ke Halaman Login & Hapus semua history navigasi sebelumnya
                 Navigator.pushAndRemoveUntil(
-                  context, 
-                  MaterialPageRoute(builder: (_) => LoginPage()), 
-                  (route) => false
+                  context,
+                  MaterialPageRoute(builder: (_) => LoginPage()),
+                  (route) => false,
                 );
               },
             ),
@@ -97,8 +132,8 @@ class DashboardPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pilih Kategori Darurat:", 
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+              "Pilih Kategori Darurat:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Expanded(
@@ -107,7 +142,7 @@ class DashboardPage extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 1.2, 
+                  childAspectRatio: 1.2,
                 ),
                 itemCount: instansiList.length,
                 itemBuilder: (context, index) {
@@ -117,7 +152,8 @@ class DashboardPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => FormLaporPage(kategori: instansiList[index].nama),
+                          builder: (_) =>
+                              FormLaporPage(kategori: instansiList[index].nama),
                         ),
                       );
                     },

@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
+
 class KategoriEntity {
   final String nama;
   final String nomor;
-  final String iconName;
+  final IconData icon;
+  final Color color;
 
   KategoriEntity({
     required this.nama,
     required this.nomor,
-    required this.iconName,
+    required this.icon,
+    required this.color,
   });
 }
