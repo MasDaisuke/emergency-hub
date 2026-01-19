@@ -5,7 +5,7 @@ class LaporanModel extends LaporanEntity {
     required int id,
     required String kategori,
     required String deskripsi,
-    required String fotoPath,
+    required String fotoPath, 
     required String tanggal,
   }) : super(
          id: id,

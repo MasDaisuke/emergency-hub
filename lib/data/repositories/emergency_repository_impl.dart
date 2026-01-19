@@ -1,6 +1,8 @@
 import '../../domain/entities/laporan_entity.dart';
 import '../../domain/repositories/emergency_repository.dart';
 import '../datasources/emergency_remote_datasource.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 class EmergencyRepositoryImpl implements EmergencyRepository {
   final EmergencyRemoteDataSource remoteDataSource;
@@ -13,8 +15,8 @@ class EmergencyRepositoryImpl implements EmergencyRepository {
   }
 
   @override
-  Future<bool> kirimLaporan(String kategori, String deskripsi, String imagePath) async {
-    return await remoteDataSource.postLaporan(kategori, deskripsi, imagePath);
+  Future<bool> kirimLaporan(String kategori, String deskripsi, XFile imageFile) async {
+    return await remoteDataSource.postLaporan(kategori, deskripsi, imageFile);
   }
 
   @override

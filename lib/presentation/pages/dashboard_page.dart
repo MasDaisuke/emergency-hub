@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/kategori_entity.dart';
 import '../widgets/instansi_card_widget.dart';
 import 'form_lapor_page.dart';
+import 'riwayat_page.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
+import 'login_page.dart';
 
 class DashboardPage extends StatelessWidget {
   final List<KategoriEntity> instansiList = [
@@ -16,7 +20,30 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //
+      appBar: AppBar(
+        title: Text("Emergency Hub"),
+        backgroundColor: Colors.redAccent, // Warna header merah
+        foregroundColor: Colors.white,
+      ),
+
+      Divider(), // Garis pemisah
+            ListTile(
+              leading: Icon(Icons.logout, color: Colors.red),
+              title: Text("Logout", style: TextStyle(color: Colors.red)),
+              onTap: () async {
+                // Panggil fungsi logout dari Provider
+                await Provider.of<AuthProvider>(context, listen: false).logout();
+                
+                // Lempar balik ke halaman Login
+                Navigator.pushAndRemoveUntil(
+                  context, 
+                  MaterialPageRoute(builder: (_) => LoginPage()), 
+                  (route) => false
+                );
+              },
+            ),
+
+      // ====================================
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -33,6 +60,7 @@ class DashboardPage extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
+                  childAspectRatio: 1.2, // Mengatur rasio lebar:tinggi kartu
                 ),
                 itemCount: instansiList.length,
                 itemBuilder: (context, index) {
@@ -57,3 +85,4 @@ class DashboardPage extends StatelessWidget {
     );
   }
 }
+

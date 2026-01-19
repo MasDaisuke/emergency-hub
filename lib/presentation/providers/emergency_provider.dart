@@ -3,6 +3,7 @@ import '../../domain/entities/laporan_entity.dart';
 import '../../domain/usecases/get_riwayat_usecase.dart';
 import '../../domain/usecases/kirim_laporan_usecase.dart';
 import '../../domain/usecases/hapus_laporan_usecase.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EmergencyProvider extends ChangeNotifier {
   final GetRiwayatUseCase getRiwayatUseCase;
@@ -36,14 +37,14 @@ class EmergencyProvider extends ChangeNotifier {
   Future<bool> kirimLaporan(
     String kategori,
     String deskripsi,
-    String imagePath,
+    XFile imageFile,
   ) async {
     _isLoading = true;
     notifyListeners();
     bool success = await kirimLaporanUseCase.execute(
       kategori,
       deskripsi,
-      imagePath,
+      imageFile,
     );
     _isLoading = false;
     notifyListeners();
