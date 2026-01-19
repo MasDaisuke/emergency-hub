@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../domain/entities/kategori_entity.dart';
 import '../widgets/instansi_card_widget.dart';
+import '../providers/auth_provider.dart'; // Import AuthProvider
 import 'form_lapor_page.dart';
 import 'riwayat_page.dart';
-import 'package:provider/provider.dart';
-import '../providers/auth_provider.dart';
-import 'login_page.dart';
+import 'login_page.dart'; // Import Login Page
 
 class DashboardPage extends StatelessWidget {
+  // Data statis kategori instansi
   final List<KategoriEntity> instansiList = [
     KategoriEntity(nama: 'Polisi', nomor: '110', iconName: 'police'),
     KategoriEntity(nama: 'Ambulans', nomor: '118', iconName: 'ambulance'),
@@ -22,19 +23,61 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Emergency Hub"),
-        backgroundColor: Colors.redAccent, // Warna header merah
+        backgroundColor: Colors.redAccent, 
         foregroundColor: Colors.white,
       ),
-
-      Divider(), // Garis pemisah
+      
+      // === MENU SAMPING (DRAWER) ===
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.redAccent,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.emergency, size: 50, color: Colors.white),
+                  SizedBox(height: 10),
+                  Text(
+                    "Menu Aplikasi",
+                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.dashboard, color: Colors.redAccent),
+              title: Text("Dashboard"),
+              onTap: () {
+                Navigator.pop(context); // Tutup drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.history, color: Colors.redAccent),
+              title: Text("Riwayat Laporan"),
+              onTap: () {
+                Navigator.pop(context); 
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (_) => RiwayatPage())
+                );
+              },
+            ),
+            
+            // === TOMBOL LOGOUT (POSISI YANG BENAR DISINI) ===
+            Divider(), 
             ListTile(
               leading: Icon(Icons.logout, color: Colors.red),
               title: Text("Logout", style: TextStyle(color: Colors.red)),
               onTap: () async {
-                // Panggil fungsi logout dari Provider
+                // 1. Panggil fungsi logout dari Provider
                 await Provider.of<AuthProvider>(context, listen: false).logout();
                 
-                // Lempar balik ke halaman Login
+                // 2. Kembali ke Halaman Login & Hapus semua history navigasi sebelumnya
                 Navigator.pushAndRemoveUntil(
                   context, 
                   MaterialPageRoute(builder: (_) => LoginPage()), 
@@ -42,16 +85,20 @@ class DashboardPage extends StatelessWidget {
                 );
               },
             ),
+            // ================================================
+          ],
+        ),
+      ),
 
-      // ====================================
+      // === ISI UTAMA HALAMAN ===
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pilih Kategori Darurat:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              "Pilih Kategori Darurat:", 
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
             ),
             SizedBox(height: 10),
             Expanded(
@@ -60,7 +107,7 @@ class DashboardPage extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 1.2, // Mengatur rasio lebar:tinggi kartu
+                  childAspectRatio: 1.2, 
                 ),
                 itemCount: instansiList.length,
                 itemBuilder: (context, index) {
@@ -70,8 +117,7 @@ class DashboardPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              FormLaporPage(kategori: instansiList[index].nama),
+                          builder: (_) => FormLaporPage(kategori: instansiList[index].nama),
                         ),
                       );
                     },
@@ -85,4 +131,3 @@ class DashboardPage extends StatelessWidget {
     );
   }
 }
-
